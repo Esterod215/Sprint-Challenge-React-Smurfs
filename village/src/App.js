@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Route} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
+
 
 class App extends Component {
   constructor(props) {
@@ -28,30 +30,23 @@ componentDidMount(){
   });
 }
 
-addSmurf = event => {
-  event.preventDefault();
-  axios
-  .post('http://localhost:3333/smurfs',this.state.smurfs)
-  .then(res=>console.log(res))
-  .catch(err=>console.log(err))
-}
 
-handleChanges=e=>{
-  this.setState({
     
-      smurfs: {
-        ...this.state.smurfs,
-        [e.target.name]: e.target.value
-      }
-    
-  });
-};
+  
 
   render() {
     return (
       <div className="App">
-        <Route  path="/smurf-form" render={props => <SmurfForm {...props} smurfs={this.state.smurfs} handleChanges={this.handleChanges} addSmurf={this.addSmurf}/>}/>
+        <div>
+<NavLink to="/">Smurfs</NavLink>
+<NavLink to="/smurf-form">Add Smurfs</NavLink>
+        </div>
+        
+        <div>
+        <Route  path="/smurf-form" render={props => <SmurfForm {...props} />}/>
         <Route exact path="/" render={props => <Smurfs {...props} smurfs={this.state.smurfs} />}/>
+        
+        </div>
       </div>
     );
   }
